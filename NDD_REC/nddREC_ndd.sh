@@ -1,6 +1,7 @@
 #!/bin/sh
 
 #-- NDD dump
+#
 setprop vendor.debug.camera.dump.p2.debuginfo 1
 setprop vendor.debug.camera.dump.lsc2 1
 setprop vendor.debug.camera.SttBufQ.enable 60
