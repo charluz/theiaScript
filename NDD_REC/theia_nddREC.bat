@@ -21,8 +21,9 @@ REM -     -S 參數可以取消自動 Copy 的功能，可以節省空間以及�
 REM -------------------------------------------------------------------
 
 set projDIR=nddREC
-set /A recTime= 10
+set /A recTime= 3
 set dontCopy= "false"
+set dontREC= "false"
 
 REM ------------------------------------------------------------------------------
 REM ----- Parse program arguments
@@ -39,6 +40,12 @@ if not "%1"=="" (
         set dontCopy= "true"
         goto :next_arg
     )
+
+    if "%1"=="-XR" (
+        set dontREC= "true"
+        goto :next_arg
+    )
+
     set projDIR=%1
 
 :next_arg
@@ -72,6 +79,8 @@ if %dontCopy% == "false" (
 )
 :_skip_nddDump
 
+if %dontREC% == "true" (goto :_skip_REC)
+
 REM ------------------------------------------------------------------------------
 REM ----- Record gstream video
 REM ------------------------------------------------------------------------------
@@ -83,6 +92,7 @@ REM ----- Pull back video clip
 REM ------------------------------------------------------------------------------
 adb pull /tmp/gstREC %projDIR%
 
+:_skip_REC
 
 if %dontCopy% == "false" (
     copy %projDIR%\theia.avi .\%projDIR%.avi

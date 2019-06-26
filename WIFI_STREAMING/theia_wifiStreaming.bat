@@ -12,7 +12,22 @@ REM a=rtpmap:96 H264/90000
 REM ---------------------------------------------------------------
 
 set pcIP="192.168.1.8"
+set initWIFI="false"
 
+REM ------------------------------------------------------------------------------
+REM ----- Parse program arguments
+REM ------------------------------------------------------------------------------
+:loop_args
+if not "%1"=="" (
+    if "%1"=="-init" (
+		REM Initialize WiFi first
+        set initWIFI= "true"
+        goto :next_arg
+    )
+:next_arg
+    shift
+    goto :loop_args
+)
 
 
 REM --------------------------------------------------------------
@@ -30,12 +45,18 @@ adb shell setprop vendor.debug.ae_loge.enable 1
 REM --------------------------------------------------------------
 REM Configure and Connect WiFi
 REM --------------------------------------------------------------
-adb push theia_connect_wifi.sh /tmp
-adb shell "cd /tmp && chmod +x theia_connect_wifi.sh && ./theia_connect_wifi.sh"
-@echo On
-pause "Is %pcIP% your PC IP ? Yes(Enter), No(Ctrl-C) ..."
-@echo OFF
+if %initWIFI% == "true" (
+	adb push theia_connect_wifi.sh /tmp
+	adb shell "cd /tmp && chmod +x theia_connect_wifi.sh && ./theia_connect_wifi.sh"
+	@echo On
+	pause "Is %pcIP% your PC IP ? Yes(Enter), No(Ctrl-C) ..."
+	@echo OFF
+)
 
+
+REM --------------------------------------------------------------
+REM Start Streaming 
+REM --------------------------------------------------------------
 adb push theia-rtp-send-FullSize.sh /data/
 adb shell chmod a+x /data/theia-rtp-send-FullSize.sh
 adb shell "cd /data && bash theia-rtp-send-FullSize.sh %pcIP%"
