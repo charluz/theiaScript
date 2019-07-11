@@ -34,7 +34,7 @@ REM --------------------------------------------------------------
 REM AE Debug
 REM --------------------------------------------------------------
 
-REM goto :_skip_debug
+goto :_skip_debug
 adb shell setprop persist.mtk.camera.log_level 3
 adb shell setprop debug.cam.drawid 1
 adb shell setprop vendor.debug.ae_loge.enable 1
@@ -55,7 +55,7 @@ if %initWIFI% == "true" (
 
 
 REM --------------------------------------------------------------
-REM Start Streaming 
+REM Start Streaming
 REM --------------------------------------------------------------
 adb push theia-rtp-send-FullSize.sh /data/
 adb shell chmod a+x /data/theia-rtp-send-FullSize.sh

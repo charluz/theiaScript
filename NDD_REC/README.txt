@@ -6,17 +6,17 @@ REM -   theia_nddREC.bat [-T n] [-S] [projDIR]
 REM -
 REM - 指令執行後會先做一次 NDD Dump，NDD 預設輸出目錄為 nddREC 。
 REM -     指定 projDIR 參數可以變更 output directory。
--
-- NDD 完成後，緊接著會錄一段 Video，預設錄影長度為 10 秒。
--     Video 會被存到 Output directory， named as theia.avi
--     指定 -T n 參數可以變更錄影長度，Example, -T 20 為 20 秒。
--
-- 為了方便查看結果，NDD jpg 以及 video 會被 copy 一份到現行目錄下，
--     檔案名稱會以 output directory 相同的名稱冠名。
--     Example: theia_nddREC.bat test1
--        NDD jpg 以及 video 會被冠名為 test1.jpg 以及 test1.avi。
--     -S 參數可以取消自動 Copy 的功能，可以節省空間以及時間。
--------------------------------------------------------------------
+REM -
+REM - NDD 完成後，緊接著會錄一段 Video，預設錄影長度為 10 秒。
+REM -     Video 會被存到 Output directory， named as theia.avi
+REM -     指定 -T n 參數可以變更錄影長度，Example, -T 20 為 20 秒。
+REM -
+REM - 為了方便查看結果，NDD jpg 以及 video 會被 copy 一份到現行目錄下，
+REM -     檔案名稱會以 output directory 相同的名稱冠名。
+REM -     Example: theia_nddREC.bat test1
+REM -        NDD jpg 以及 video 會被冠名為 test1.jpg 以及 test1.avi。
+REM -     -S 參數可以取消自動 Copy 的功能，可以節省空間以及時間。
+REM -------------------------------------------------------------------
 Example:
 	theia_nddREC.bat -T 30 test-001
 		Camera會做以下動作:
@@ -29,10 +29,10 @@ NOTE:
 	記得在開機後，要先 login 到 camera (UART console)，
 	執行以下指令一次 :
 
-		mount -o remount,rw  /
-		mkdir -p /sdcard/camera_dump/
-		cct_camera_server &
+mount -o remount,rw  /
+mkdir -p /sdcard/camera_dump/
+cct_camera_server &
 
-	
+
 
 

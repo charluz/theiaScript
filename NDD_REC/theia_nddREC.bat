@@ -24,6 +24,7 @@ set projDIR=nddREC
 set /A recTime= 3
 set dontCopy= "false"
 set dontREC= "false"
+set dontNDD="false"
 
 REM ------------------------------------------------------------------------------
 REM ----- Parse program arguments
@@ -43,6 +44,11 @@ if not "%1"=="" (
 
     if "%1"=="-XR" (
         set dontREC= "true"
+        goto :next_arg
+    )
+
+    if "%1"=="-XN" (
+        set dontNDD= "true"
         goto :next_arg
     )
 
@@ -68,7 +74,11 @@ REM ----------------------------------------------------------------------------
 REM ----- NDD Dump
 REM ------------------------------------------------------------------------------
 REM goto :_skip_nddDump
-call ADB_ndd.bat %projDIR%
+
+if %dontNDD% == "false" (
+	call ADB_ndd.bat %projDIR%
+)
+
 
 if %dontCopy% == "false" (
     cd %projDIR%
