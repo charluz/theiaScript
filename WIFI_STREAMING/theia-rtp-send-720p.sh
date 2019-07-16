@@ -2,7 +2,7 @@
 
 # Set target IP address for stream
 TARGET_IP=$1
-BITRATE=9000000
+BITRATE=6000000
 GOP=8
 if [ "$TARGET_IP" == "" ]
 then
@@ -17,7 +17,7 @@ fi
 if [ "$#" -gt 3 ]; then
     GOP=$3
 fi
-echo "Streaming 1080p to $TARGET_IP, bitrate=$BITRATE, gop=$GOP ...."
+echo "Streaming 720p to $TARGET_IP, bitrate=$BITRATE, gop=$GOP ...."
 
 #-- original script
 if false; then
@@ -44,7 +44,7 @@ fi
 gst-launch-1.0 v4l2src device=/dev/video3 ! \
 video/x-raw,format=YUY2,width=2688,height=1944,framerate=30/1 ! \
 aspectratiocrop aspect-ratio=16/9 ! \
-mtkmdp width=1920 height=1080 ! video/x-raw,format=I420 !  \
+mtkmdp width=1280 height=720 ! video/x-raw,format=I420 !  \
 tee name=videoraw \
 \
 videoraw. ! \
