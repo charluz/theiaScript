@@ -79,7 +79,12 @@ adb shell setprop vendor.debug.capture.forceZsd 1
 adb shell mkdir -p %camDir%
 adb shell rm -f %camDir%/*
 @echo on
-adb shell gst-launch-1.0 -v v4l2src device="/dev/video3" num-buffers=%recFrames% ! video/x-raw,format=YUY2,width=%fstOrderSizeW%,height=%fstOrderSizeH%, framerate=30/1 ! mtkmdp width=%sizeW% height=%sizeH% ! video/x-raw,format=I420 ! v4l2mtkh264enc bitrate=9000000 gop=8 ! avimux ! filesink location=%camDir%/%aviName%.avi
+adb shell gst-launch-1.0 -v v4l2src device="/dev/video3" num-buffers=%recFrames% !^
+video/x-raw,format=YUY2,width=%fstOrderSizeW%,height=%fstOrderSizeH%, framerate=30/1 !^
+aspectratiocrop aspect-ratio=16/9 ! \^
+mtkmdp width=%sizeW% height=%sizeH% ! video/x-raw,format=I420 !^
+v4l2mtkh264enc bitrate=9000000 gop=8 !^
+avimux ! filesink location=%camDir%/%aviName%.avi
 @echo off
 
 :_exit
